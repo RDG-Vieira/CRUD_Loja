@@ -84,7 +84,7 @@ def cadastrar_clientes():
         flash('Cliente cadastrado com sucesso!')
         return redirect(url_for('cadastrar_clientes'))  # <-- redireciona para a página de clientes
 
-    clientes = list(db['clientes'].find())
+    clientes = list(db['clientes'].find().sort('_id', -1).limit(5)) 
     return render_template('cadastrar_clientes.html', clientes=clientes)
 
 @app.route('/excluir_cliente/<id>', methods=['POST'])
@@ -210,7 +210,6 @@ def baixar_vendas_pdf():
         as_attachment=True,
         download_name='vendas.pdf'
     )
-
 
 if __name__ == '__main__':
     app.run(debug=True)
