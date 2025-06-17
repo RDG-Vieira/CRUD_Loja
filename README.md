@@ -1,4 +1,4 @@
-Documentação do Sistema CRUD RDG-Data Science
+Documentação do Sistema RDG-Data Science
 Objetivo do Projeto
 Este projeto foi criado com o objetivo de ajudar a empresa onde faço estágio.
 Atualmente, a empresa não possui um sistema digital, o que torna os processos mais
