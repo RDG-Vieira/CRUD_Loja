@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Atualizar Cliente</title>
+    <style>
+        /* Use o mesmo CSS do formulário de clientes para manter o padrão */
+        body {
+            background: #f8f6fc;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container-atualizar {
+            max-width: 420px;
+            margin: 60px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(75,0,110,0.10);
+            padding: 32px 28px;
+        }
+        h2 {
+            color: #800080;
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        label {
+            font-weight: bold;
+            color: #800080;
+            margin-bottom: 4px;
+        }
+        input, textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+            background: #f8f6fc;
+            transition: border 0.2s;
+        }
+        input:focus, textarea:focus {
+            border: 1.5px solid #800080;
+            outline: none;
+        }
+        button[type="submit"], button[type="button"] {
+            background: #800080;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+        button[type="submit"]:hover, button[type="button"]:hover {
+            background: #a4508b;
+        }
+        a button[type="button"] {
+            background: #f3e6fa;
+            color: #800080;
+            margin-left: 10px;
+        }
+        a button[type="button"]:hover {
+            background: #e0c7f7;
+            color: #4b006e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-atualizar">
+        <h2>Atualizar Cliente</h2>
+        <form method="post">
+            <label>Nome:</label>
+            <input type="text" name="nome" value="{{ cliente.nome }}" required>
+            <label>Email:</label>
+            <input type="email" name="email" value="{{ cliente.email }}" required>
+            <label>Telefone:</label>
+            <input type="text" name="telefone" value="{{ cliente.telefone }}" required>
+            <label>Endereço:</label>
+            <input type="text" name="endereco" value="{{ cliente.endereco }}" required>
+            <label>Observação:</label>
+            <textarea name="observacao">{{ cliente.observacao }}</textarea>
+            <button type="submit">Salvar</button>
+            <a href="{{ url_for('cadastrar_clientes') }}"><button type="button">Cancelar</button></a>
+        </form>
+    </div>
+</body>
+</html>

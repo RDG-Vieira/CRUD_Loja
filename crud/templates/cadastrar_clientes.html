@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Clientes</title>
+    <style>
+        body {
+            background: #f8f6fc;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container-clientes {
+            max-width: 420px;
+            margin: 40px auto 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(75,0,110,0.10);
+            padding: 32px 28px;
+        }
+        h2 {
+            color: #800080;
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        label {
+            font-weight: bold;
+            color: #800080;
+            margin-bottom: 4px;
+        }
+        input, textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+            background: #f8f6fc;
+            transition: border 0.2s;
+        }
+        input:focus, textarea:focus {
+            border: 1.5px solid #800080;
+            outline: none;
+        }
+        button[type="submit"], button[type="button"] {
+            background: #800080;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+        button[type="submit"]:hover, button[type="button"]:hover {
+            background: #a4508b;
+        }
+        a button[type="button"] {
+            background: #f3e6fa;
+            color: #800080;
+            margin-left: 10px;
+        }
+        a button[type="button"]:hover {
+            background: #e0c7f7;
+            color: #4b006e;
+        }
+        .tabela-clientes {
+            margin: 40px auto 0 auto;
+            border-collapse: collapse;
+            width: 90%;
+            max-width: 900px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(75,0,110,0.08);
+            overflow: hidden;
+        }
+        .tabela-clientes th {
+            background: #800080;
+            color: #fff;
+            padding: 14px 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-bottom: 2px solid #a4508b;
+        }
+        .tabela-clientes td {
+            padding: 12px 8px;
+            text-align: center;
+            color: #4b006e;
+            border-bottom: 1px solid #f3e6fa;
+        }
+        .tabela-clientes tr:nth-child(even) {
+            background: #f8f6fc;
+        }
+        .tabela-clientes tr:hover {
+            background: #f3e6fa;
+        }
+        #custom-popup {
+            position: fixed;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, #800080 60%, #a4508b 100%);
+            color: #fff;
+            padding: 18px 32px 18px 24px;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(75,0,110,0.18);
+            font-size: 1.1rem;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            min-width: 220px;
+            max-width: 90vw;
+            animation: popup-fadein 0.5s;
+        }
+        #close-popup {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            margin-left: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        #close-popup:hover {
+            color: #ffd6fa;
+        }
+        @keyframes popup-fadein {
+            from { opacity: 0; top: 0; }
+            to { opacity: 1; top: 40px; }
+        }
+    </style>
+</head>
+<body>
+    <a href="{{ url_for('pagina_formulario') }}">
+        <button type="button">Página inicial</button>
+    </a>
+    <div class="container-clientes">
+        <h2>Cadastrar Cliente</h2>
+        <form method="post">
+            <label>Nome:</label>
+            <input type="text" name="nome" required>
+            <label>Email:</label>
+            <input type="email" name="email" required>
+            <label>Telefone:</label>
+            <input type="text" name="telefone" required>
+            <label>Endereço:</label>
+            <input type="text" name="endereco" required>
+            <label>Observação:</label>
+            <textarea name="observacao"></textarea>
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+
+    <h2 style="text-align:center; color:#800080; margin-top:40px;">Clientes cadastrados</h2>
+    <table class="tabela-clientes">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Endereço</th>
+                <th>Observação</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+            <tr>
+                <td>{{ cliente.nome }}</td>
+                <td>{{ cliente.email }}</td>
+                <td>{{ cliente.telefone }}</td>
+                <td>{{ cliente.endereco }}</td>
+                <td>{{ cliente.observacao }}</td>
+                <td>
+                    <form action="{{ url_for('excluir_cliente', id=cliente._id) }}" method="post" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                    </form>
+                    <a href="{{ url_for('atualizar_cliente', id=cliente._id) }}">
+                        <button type="button">Atualizar</button>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div id="custom-popup" class="popup-show">
+          <span id="popup-message">{{ messages[0] }}</span>
+          <button id="close-popup" onclick="document.getElementById('custom-popup').style.display='none'">&times;</button>
+        </div>
+        <script>
+          setTimeout(function() {
+            var popup = document.getElementById('custom-popup');
+            if (popup) popup.style.display = 'none';
+          }, 3500); // Fecha automaticamente após 3,5 segundos
+        </script>
+      {% endif %}
+    {% endwith %}
+    
+</body>
+</html>

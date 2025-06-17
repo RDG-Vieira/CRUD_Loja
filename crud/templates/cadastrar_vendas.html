@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .form-venda {
+            max-width: 400px;
+            margin: 40px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #f8f6fc;
+            padding: 24px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .form-venda label {
+            font-weight: bold;
+            color: #800080;
+        }
+        .form-venda input, .form-venda textarea {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        .form-venda textarea {
+            resize: none; /* Impede redimensionamento */
+             height: 75px;
+        }
+        .form-venda button {
+            background: #800080;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .form-venda button:hover {
+            background: #a4508b;
+        }
+
+        .tabela-vendas {
+    margin: 40px auto 0 auto;
+    border-collapse: collapse;
+    width: 90%;
+    max-width: 800px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(75,0,110,0.08);
+    overflow: hidden;
+    }
+    .tabela-vendas th {
+    background: #800080;
+    color: #fff;
+    padding: 14px 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-bottom: 2px solid #a4508b;
+    }
+    .tabela-vendas td {
+    padding: 12px 8px;
+    text-align: center;
+    color: #4b006e;
+    border-bottom: 1px solid #f3e6fa;
+    }
+    .tabela-vendas tr:nth-child(even) {
+    background: #f8f6fc;
+    }
+    .tabela-vendas tr:hover {
+    background: #f3e6fa;
+    }
+    .tabela-vendas th:first-child, .tabela-vendas td:first-child {
+    border-left: none;
+    }
+    .tabela-vendas th:last-child, .tabela-vendas td:last-child {
+    border-right: none;
+    }
+    button[type="submit"], button[type="button"] {
+        background: #800080;
+        color: #fff;
+        border: none;
+        padding: 12px;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background 0.2s;
+    }
+    button[type="submit"]:hover, button[type="button"]:hover {
+    background: #a4508b;
+    }
+    a button[type="button"] {
+        background: #f3e6fa;
+        color: #800080;
+        margin-left: 10px;
+    }
+    a button[type="button"]:hover {
+        background: #e0c7f7;
+        color: #4b006e;
+    }
+
+    #custom-popup {
+        position: fixed;
+        top: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(90deg, #800080 60%, #a4508b 100%);
+        color: #fff;
+        padding: 18px 32px 18px 24px;
+        border-radius: 10px;
+        box-shadow: 0 4px 16px rgba(75,0,110,0.18);
+        font-size: 1.1rem;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        min-width: 220px;
+        max-width: 90vw;
+        animation: popup-fadein 0.5s;
+      }
+      #close-popup {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 1.5rem;
+        margin-left: 18px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: color 0.2s;
+      }
+      #close-popup:hover {
+        color: #ffd6fa;
+      }
+      @keyframes popup-fadein {
+        from { opacity: 0; top: 0; }
+        to { opacity: 1; top: 40px; }
+      }
+
+       #custom-popup {
+        position: fixed;
+        top: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(90deg, #800080 60%, #a4508b 100%);
+        color: #fff;
+        padding: 18px 32px 18px 24px;
+        border-radius: 10px;
+        box-shadow: 0 4px 16px rgba(75,0,110,0.18);
+        font-size: 1.1rem;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        min-width: 220px;
+        max-width: 90vw;
+        animation: popup-fadein 0.5s;
+      }
+      #close-popup {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 1.5rem;
+        margin-left: 18px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: color 0.2s;
+      }
+      #close-popup:hover {
+        color: #ffd6fa;
+      }
+      @keyframes popup-fadein {
+        from { opacity: 0; top: 0; }
+        to { opacity: 1; top: 40px; }
+      }
+
+    </style>
+</head>
+<body>
+    <a href="{{ url_for('pagina_formulario') }}">
+        <button type="button">Página inicial</button>
+    </a>
+    <form action="#" method="post" class="form-venda">
+        <label for="nome">Nome do Produto:</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <label for="valor">Valor:</label>
+        <input type="text" id="valor" name="valor" required oninput="formatarValor(this)">
+
+        <label for="codigo">Código do Produto:</label>
+        <input type="text" id="codigo" name="codigo" required style="text-transform:uppercase" oninput="this.value = this.value.toUpperCase();">
+
+        <label for="data">Data:</label>
+        <input type="date" id="data" name="data" required>
+
+        <label for="observacao">Observação:</label>
+        <textarea id="observacao" name="observacao"></textarea>
+
+        <button type="submit">Cadastrar</button>
+    </form>
+
+</div>
+
+  <h2 style="text-align:center; color:#800080; margin-top:40px;">Vendas cadastradas</h2>
+    <table class="tabela-vendas">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Valor</th>
+                <th>Código</th>
+                <th>Data</th>
+                <th>Observação</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for venda in vendas %}
+            <tr>
+                <td>{{ venda.nome }}</td>
+                <td>R${{ "%.2f"|format(venda.valor) }}</td>
+                <td>{{ venda.codigo }}</td>
+                <td>{{ venda.data }}</td>
+                <td>{{ venda.observacao }}</td>
+                <td>
+                    <form action="{{ url_for('excluir_venda', id=venda._id) }}" method="post" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                    </form>
+                    <a href="{{ url_for('atualizar_venda', id=venda._id) }}">
+                        <button type="button">Atualizar</button>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div id="custom-popup" class="popup-show">
+      <span id="popup-message">{{ messages[0] }}</span>
+      <button id="close-popup" onclick="document.getElementById('custom-popup').style.display='none'">&times;</button>
+    </div>
+    <script>
+      setTimeout(function() {
+        var popup = document.getElementById('custom-popup');
+        if (popup) popup.style.display = 'none';
+      }, 3500); // Fecha automaticamente após 3,5 segundos
+    </script>
+  {% endif %}
+{% endwith %}
+    <!-- Botão centralizado -->
+<div style="display: flex; justify-content: center; margin-top: 24px;">
+    <button type="button" onclick="abrirModalPDF()" style="background:#800080; color:#fff; border:none; padding:12px 24px; border-radius:6px; font-weight:bold; cursor:pointer;">
+        Baixar vendas (PDF)
+    </button>
+</div>
+
+<!-- Modal para selecionar datas -->
+<div id="modalPDF" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); z-index:9999; align-items:center; justify-content:center;">
+    <div style="background:#fff; padding:32px 28px; border-radius:16px; box-shadow:0 2px 12px rgba(75,0,110,0.10); min-width:260px; max-width:340px; margin:auto; display:flex; flex-direction:column; align-items:center;">
+        <form method="post" action="{{ url_for('baixar_vendas_pdf') }}" style="display:flex; flex-direction:column; gap:18px; width:100%; align-items:center;">
+            <h3 style="color:#800080; text-align:center; margin:0 0 10px 0;">Selecione o período</h3>
+            <div style="display:flex; gap:8px; align-items:center;">
+                <label for="data_inicio" style="color:#800080;">De:</label>
+                <input type="date" id="data_inicio" name="data_inicio" required>
+                <label for="data_fim" style="color:#800080;">Até:</label>
+                <input type="date" id="data_fim" name="data_fim" required>
+            </div>
+            <div style="display:flex; gap:12px; justify-content:center; width:100%;">
+                <button type="submit" style="background:#800080; color:#fff; border:none; padding:10px 24px; border-radius:6px; font-weight:bold; cursor:pointer;">Baixar PDF</button>
+                <button type="button" onclick="fecharModalPDF()" style="background:#f3e6fa; color:#800080; border:none; padding:10px 24px; border-radius:6px; font-weight:bold; cursor:pointer;">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function abrirModalPDF() {
+    document.getElementById('modalPDF').style.display = 'flex';
+}
+function fecharModalPDF() {
+    document.getElementById('modalPDF').style.display = 'none';
+}
+</script>
+    <script>
+        function formatarValor(input) {
+            let valor = input.value.replace(/\D/g, "");
+            valor = (parseInt(valor, 10) / 100).toFixed(2) + '';
+            valor = valor.replace('.', ',');
+            valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            input.value = 'R$' + valor;
+        }
+    </script>
+</body>
+
+</html>

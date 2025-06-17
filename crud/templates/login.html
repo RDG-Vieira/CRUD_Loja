@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <div class="profile-icon">
+            <svg viewBox="0 0 64 64" fill="none">
+                <circle cx="32" cy="24" r="14" stroke="white" stroke-width="3" fill="white" fill-opacity="0.15"/>
+                <ellipse cx="32" cy="48" rx="18" ry="10" stroke="white" stroke-width="3" fill="white" fill-opacity="0.10"/>
+            </svg>
+        </div>
+        <form method="post">
+            <div class="input-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="senha" required>
+            </div>
+            <button type="submit" class="login-btn">Entrar</button>
+            <p style="margin-top: 15px;">Ainda não tem conta? <a href="{{ url_for('register') }}">Cadastrar</a></p>
+        </form>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+              {% for message in messages %}
+                <li style="color:rgb(5, 39, 228);">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

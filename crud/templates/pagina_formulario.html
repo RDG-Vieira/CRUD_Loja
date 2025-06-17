@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pagina_formulario.css') }}">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="sidebar-color">
+        <img src="{{ url_for('static', filename='img/RDG_logo_250x150.png') }}" class="logo-rdg" alt="Logo RDG">
+    </div>
+    <div class="divider-vertical"></div>
+    <div class="divider-horizontal"></div>
+    <!-- Botão superior: ícone + texto -->
+    <button class="circle-btn top user-btn" title="Trocar usuário"
+        onclick="window.location.href='{{ url_for('login') }}'">
+        <span class="icon">&#128100;</span>
+    </button>
+    <!-- Botão inferior: só engrenagem, texto aparece no hover -->
+    <button class="circle-btn bottom config-btn" title="Configuração">
+        <span class="icon">&#9881;</span>
+        <span class="config-text">Configuração</span>
+    </button>
+    <div class="center-container">
+        <button class="main-btn" onclick="window.location.href='{{ url_for('cadastrar_vendas')}}'">
+            Cadastrar Vendas
+        </button>
+        <button class="main-btn" onclick="window.location.href='{{ url_for('cadastrar_clientes')}}'">Cadastrar Clientes</button>
+    </div>
+
+    <footer>
+        <a href="{{ url_for('politica_tratamento_dados') }}">
+            <h6>Política Privacidade e Tratamento dos Dados</h6>
+        </a>
+    </footer>
+</body>
+</html>
