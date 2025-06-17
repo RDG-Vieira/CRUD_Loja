@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Inicial</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/pagina_formulario.css') }}">
-    <style>
-        
-    </style>
 </head>
 <body>
     <div class="sidebar-color">
@@ -16,7 +13,7 @@
     <div class="divider-vertical"></div>
     <div class="divider-horizontal"></div>
     <!-- Botão superior: ícone + texto -->
-    <button class="circle-btn top user-btn" title="Trocar usuário"
+    <button class="circle-btn top user-btn " class="tooltip" title="Trocar usuário"
         onclick="window.location.href='{{ url_for('login') }}'">
         <span class="icon">&#128100;</span>
     </button>
